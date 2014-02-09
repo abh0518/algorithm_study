@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -35,12 +34,6 @@ public class Main {
 		Arrays.sort(lunchSet, new Comparator<LunchSet>(){
 			@Override
 			public int compare(LunchSet frontSet, LunchSet lastSet) {
-//주석처리한 부분으로 비교로직을 돌리면 오답처리됨. 무슨 차이지?
-//				int front = frontSet.heatingTime + ((frontSet.eatingTime >= lastSet.eatingTime + lastSet.heatingTime)? frontSet.eatingTime : lastSet.eatingTime + lastSet.heatingTime);
-//				int last = lastSet.heatingTime + ((lastSet.eatingTime >= frontSet.eatingTime + frontSet.heatingTime)? lastSet.eatingTime : frontSet.eatingTime + frontSet.heatingTime);
-//				if( front > last ) return 1;
-//				else if ( front < last) return -1;
-//				else return 0;
 				if(frontSet.eatingTime < lastSet.eatingTime) return 1;
 				else if(frontSet.eatingTime > lastSet.eatingTime) return -1;
 				else return 0;
