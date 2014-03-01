@@ -24,8 +24,8 @@ public class Main {
 	public static void main(String args[]) throws FileNotFoundException {
 		Main main = new Main();
 		
-		Scanner sc = new Scanner(new File("input.txt"));
-//		Scanner sc = new Scanner(System.in);
+//		Scanner sc = new Scanner(new File("input.txt"));
+		Scanner sc = new Scanner(System.in);
 		int cases = sc.nextInt();
 		
 		while (cases-- > 0) {
@@ -45,25 +45,27 @@ public class Main {
 				participants.add(main.new Participant(microwaveTimeList.get(i), eatTimeList.get(i)));
 			}
 			
-			Collections.sort(participants);
-			int minLunchTime = findMinLunchTime(participants, 0);
+			int minLunchTime = findMinLunchTime(participants);
 			System.out.println(minLunchTime);
 		}
 		
 		sc.close();
 	}
 	
-	public static int findMinLunchTime(List<Participant> participants, int index) {
-		Participant target = participants.get(index);
+	public static int findMinLunchTime(List<Participant> participants) {
+		List<Integer> participantLunchTime = new ArrayList<Integer>(participants.size());
+		int currentSum = 0;
 		
-		if (participants.size()-1 == index) {
-			return target.getMicrowaveTime() + target.getEatTime(); 
+		Collections.sort(participants);
+		for (Participant participant : participants) {
+			participantLunchTime.add(participant.getSumOfTime() + currentSum);
+			
+			currentSum += participant.getMicrowaveTime();
 		}
 		
-		int targetSum = target.getMicrowaveTime() + target.getEatTime();
-		int subMinLunchTime = target.getMicrowaveTime() + findMinLunchTime(participants, index+1);
-		
-		return Math.max(targetSum, subMinLunchTime);
+		Collections.sort(participantLunchTime);
+		Collections.reverse(participantLunchTime);
+		return participantLunchTime.get(0);
 	}
 	
 	public class Participant implements Comparable<Participant>{
@@ -92,7 +94,7 @@ public class Main {
 			if (eatTime > p.getEatTime()) {
 				return -1;
 			} else if (eatTime == p.getEatTime()) {
-				if (microwaveTime >= p.getEatTime()) {
+				if (microwaveTime >= p.getMicrowaveTime()) {
 					return -1;
 				} else {
 					return 1;
