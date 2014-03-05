@@ -10,14 +10,9 @@ typedef pair <double, double> dd;
 dd match( double x, double y, double r)
 {
 	double now = fmod( atan2( x, y ) + 2*M_PI, 2*M_PI);
-	//double now = atan2( x, y ) + M_PI;
-	//double now = atan2(x,y);
 	double add = 2 * asin( r / 16 );
-	//cout << now << ", " << add << endl;
-	//now -= add;
 	return  make_pair( now-add, now+add );
 }
-//THE RNAGE OF ANGLE [0, 2PI]
 
 int schedule(double beg, double end, int n, vector<dd> v)
 {
@@ -53,8 +48,6 @@ int main()
 		}
 		sort(v.begin(), v.end());
 
-
-		//
 		for (int i = 0; i < n; ++i)
 		{
 			if(v[i].first <= 0 || v[i].second >= 2*M_PI) {
@@ -67,6 +60,5 @@ int main()
 			cout << "IMPOSSIBLE" << endl;
 		else
 			cout << selected << endl;
-		//
 	}
 }
